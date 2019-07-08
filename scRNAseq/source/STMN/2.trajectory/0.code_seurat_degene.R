@@ -6,7 +6,7 @@ library(Seurat)
 library(scater)
 
 
-data_path = "../data/STMN"
+data_path = "../../../data/STMN"
 setwd(data_path)
 
 

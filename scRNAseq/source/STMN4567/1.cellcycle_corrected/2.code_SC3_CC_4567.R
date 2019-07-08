@@ -7,7 +7,7 @@ library(SC3)
 library(Rtsne)
 library(scater)
 
-data_path = "../data/STMN4567"
+data_path = "../../../data/STMN4567"
 setwd(data_path)
 
 
@@ -25,22 +25,21 @@ rowData(scesetFiltered)$feature_symbol = ensemblGenes[rownames(scesetFiltered), 
 
 attributes(scesetFiltered@reducedDims)$listData$TSNE = Y$Y
 
-setwd(data_path)
 # save tSNE information into scesetFiltered
 # saveRDS(scesetFiltered, paste("scsetFiltered_CC_4567TSNEP",PERPLEXITY,"_rebuttal.rds",sep=""))
 scesetFiltered = readRDS(file = paste("scsetFiltered_CC_4567TSNEP",PERPLEXITY,"_rebuttal.rds",sep=""))
 
-setwd(figure_path)
+
 pdf(paste("Figure_rTSNE_Perplexity",PERPLEXITY,"_rebuttal.pdf",sep=""))
 cellColor = c("#d73027", "#4575b4")
 par(mar=c(5,5,1,1), cex.axis=1.5, cex.lab=1.5)
 plot(attributes(scesetFiltered@reducedDims)$listData$TSNE[,1],
      attributes(scesetFiltered@reducedDims)$listData$TSNE[,2], pch=20, col="black",
      xlab="Component 1", ylab="Component 2", cex=1.5)
-points(attributes(scesetFiltered@reducedDims)$listData$TSNE[colData(scesetFiltered)[,"condition"]=="23002", 1],
-       attributes(scesetFiltered@reducedDims)$listData$TSNE[colData(scesetFiltered)[,"condition"]=="23002", 2], pch=20, col=cellColor[1], cex=1.5)
-points(attributes(scesetFiltered@reducedDims)$listData$TSNE[colData(scesetFiltered)[,"condition"]=="23003", 1],
-       attributes(scesetFiltered@reducedDims)$listData$TSNE[colData(scesetFiltered)[,"condition"]=="23003", 2], pch=20, col=cellColor[2], cex=1.5)
+points(attributes(scesetFiltered@reducedDims)$listData$TSNE[grepl("^23002",colnames(scesetFiltered)), 1],
+       attributes(scesetFiltered@reducedDims)$listData$TSNE[grepl("^23002",colnames(scesetFiltered)), 2], pch=20, col=cellColor[1], cex=1.5)
+points(attributes(scesetFiltered@reducedDims)$listData$TSNE[grepl("^23003",colnames(scesetFiltered)), 1],
+       attributes(scesetFiltered@reducedDims)$listData$TSNE[grepl("^23003",colnames(scesetFiltered)), 2], pch=20, col=cellColor[2], cex=1.5)
 legend(-60, -50, c("23002", "23003"),
        pch=20,
        col=cellColor, bty="n", cex=1)
@@ -60,6 +59,7 @@ dev.off()
 
 
 # save(sc3set, file= "sc3set4567_CC_rebuttal.RData")
+load("sc3set4567_CC_rebuttal.RData")
 
 i = est_k
 cluster_sc3 = as.factor(sc3set$sc3_6_clusters) # sc3_k_clusters #if cluster # is changed, this also should be changed.

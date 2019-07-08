@@ -5,7 +5,7 @@
 
 library(Seurat)
 library(scater)
-data_path = "../data/STMN4567"
+data_path = "../../../data/STMN4567"
 setwd(data_path)
 
 load("ensemblGenes2017-10-30.RData")

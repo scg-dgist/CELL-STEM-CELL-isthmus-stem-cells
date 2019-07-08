@@ -7,7 +7,7 @@ library(monocle)
 library(zoo)
 library(reshape2)
 
-data_path = "../data/STMN"
+data_path = "../../../data/STMN"
 setwd(data_path)
 
 PERPLEXITY =50
@@ -46,7 +46,7 @@ monosetFiltered <- reduceDimension(monosetFiltered, max_components = 2)
 monosetFiltered <- orderCells(monosetFiltered)
 pData(monosetFiltered)$cluster = newclusters
 # save(monosetFiltered, file="monosetFiltered.RData")
-
+load(file="monosetFiltered.RData")
 pdf("FigureX_monocle_cluster.pdf")
 plot_cell_trajectory(monosetFiltered, color_by = "cluster", show_branch_points = F)
 dev.off()
@@ -54,7 +54,8 @@ pdf("FigureX_monocle_pseudotime.pdf")
 plot_cell_trajectory(monosetFiltered, color_by = "Pseudotime", show_branch_points = F)
 dev.off()
 
-
+geneList_sym = c("Mki67",  "Stmn1" , "Muc6" ,  "Muc5ac")
+geneList = rownames(ensemblGenes)[ensemblGenes$external_gene_name %in% geneList_sym]
 
 cds_6_1_m = monosetFiltered[geneList,ind_6_1]
 cds_6_2_m = monosetFiltered[geneList,ind_6_2]

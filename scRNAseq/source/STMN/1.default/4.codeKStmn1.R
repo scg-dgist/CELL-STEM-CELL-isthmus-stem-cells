@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(pheatmap)
 
 
-data_path = "../data/STMN"
+data_path = "../../../data/STMN"
 setwd(data_path)
 PERPLEXITY =50
 scesetFiltered = readRDS(file =paste0("scsetFilteredTSNEP",PERPLEXITY,".rds"))

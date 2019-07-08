@@ -8,7 +8,7 @@ library(reshape2)
 library(slingshot)
 library(plotly)
 
-data_path = "../data/STMN4567"
+data_path = "../../../data/STMN4567"
 setwd(data_path)
 
 

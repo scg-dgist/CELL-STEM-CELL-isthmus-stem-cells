@@ -3,7 +3,7 @@
 ##### Last Update: 2019/07/04
 
 
-data_path = "../data/STMN4567"
+data_path = "../../../data/STMN4567"
 setwd(data_path)
 
 #library loading

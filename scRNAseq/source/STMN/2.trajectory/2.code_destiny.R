@@ -7,7 +7,7 @@ library(destiny)
 library(zoo)
 library(reshape2)
 
-data_path = "../data/STMN"
+data_path = "../../../data/STMN"
 setwd(data_path)
 
 
@@ -21,7 +21,7 @@ newclusters = sc3set@colData$sc3_9_clusters
 
 load("markers_using_seurat.RData")
 deGenes_using_seurat = unique(markers[markers[,2]>log(1.5) & markers[,5] < 0.05,7])
-
+load("ensemblGenes2017-10-30.RData")
 deGenes_table = subset(markers, p_val_adj < 0.05 & avg_logFC > log(1.5) & gene %in% deGenes_using_seurat)
 deGenes_table_df = data.frame(deGenes_table$cluster,
                               deGenes_table$gene,
@@ -32,9 +32,9 @@ deGenes_table_df = data.frame(deGenes_table$cluster,
                               deGenes_table$p_val_adj)
 colnames(deGenes_table_df) = c("Cluster","Ensembl gene id", "Gene Symbol","expressed pct.in","expressed pct.out", "AvgLogFC","Adj. p-value")
 head(deGenes_table_df)
-write.csv(deGenes_table_df, "Stmn single-cell data Marker gene List.csv", quote =F, row.names=F)
+# write.csv(deGenes_table_df, "Stmn single-cell data Marker gene List.csv", quote =F, row.names=F)
 
-load("ensemblGenes2017-10-30.RData")
+
 
 
 exprs.DE = exprs(scesetFiltered)[deGenes_using_seurat,]
@@ -43,6 +43,7 @@ exprs.DE = exprs(scesetFiltered)[deGenes_using_seurat,]
 dm = DiffusionMap(t(exprs.DE))
 dpt = DPT(dm)
 # save(dpt, file="dpt.RData")
+load(file="dpt.RData")
 plot(dpt, pch = 20)
 plot(dpt, col_by = "branch")
 
@@ -139,7 +140,7 @@ for(i in features.plot){
 
 df.TSmat = data.frame(t(TSmat), x = 1:length(colnames(cd_zscore[,ind_6_2])))
 df.TSmat.long <- melt(df.TSmat, id=c("x"))
-setwd(figure_path)
+
 pdf("FigureX_path_6_2_destiny_pseudotime_plot_rollmean_selected_genes.pdf")
 ggplot(data = df.TSmat.long, aes(x=x, y=value, color=variable)) +
   geom_line() +
