@@ -1,0 +1,14 @@
+              lambda           1.0000000000
+            omega_in           0.0208000000
+           omega_out           0.0130000000
+        num_segments      8
+     potential_width           0.3000000000
+  barrier_equivalent      2
+          num_colors      2
+ induction_frequency           0.1400000000
+            sim_time      1500.000000000000
+             eq_time         0.000000000000
+            num_runs  10000
+         bins_clones      8
+         bins_angles      8
+                  dt         1.000000000000
